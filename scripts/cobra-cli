@@ -1,0 +1,3 @@
+#!/bin/sh
+
+go run -mod=vendor github.com/spf13/cobra-cli $@
