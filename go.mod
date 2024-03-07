@@ -4,6 +4,7 @@ go 1.22.1
 
 require (
 	github.com/BurntSushi/toml v0.3.1
+	github.com/lib/pq v1.10.9
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/cobra-cli v1.3.0
 	github.com/spf13/pflag v1.0.5
