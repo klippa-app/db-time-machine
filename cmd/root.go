@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"strings"
 
+	"github.com/klippa-app/db-time-machine/db"
 	"github.com/klippa-app/db-time-machine/db/dialect"
 	"github.com/klippa-app/db-time-machine/internal"
 	"github.com/klippa-app/db-time-machine/internal/config"
@@ -49,12 +50,15 @@ ever instantiate a new database for the current migration.`,
 			panic(err)
 		}
 
+		driver := dialect.Postgres()
+		ctx = db.AttachContext(ctx, driver)
+
 		cmd.SetContext(ctx)
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx := cmd.Context()
 
-		driver := dialect.Postgres()
+		driver := db.FromContext(ctx)
 
 		name, err := internal.Get(ctx, driver, func(ctx context.Context, name string) error {
 			cfg := config.FromContext(ctx)

@@ -46,8 +46,8 @@ func (p postgres) List(ctx context.Context) ([]string, error) {
 		return nil, err
 	}
 
-	rows, err := conn.Query("SELECT datname FROM pg_database WHERE datname LIKE $1", cfg.Prefix)
-
+	query := fmt.Sprintf("SELECT datname FROM pg_database WHERE datname LIKE '%s%%'", cfg.Prefix)
+	rows, err := conn.Query(query)
 	if err != nil {
 		return nil, err
 	}

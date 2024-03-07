@@ -13,3 +13,18 @@ type Driver interface {
 	Remove(ctx context.Context, target string) error
 	Prune(ctx context.Context) error
 }
+
+type driverContextKey struct{}
+
+func FromContext(ctx context.Context) Driver {
+	value := ctx.Value(driverContextKey{})
+	driver, ok := value.(Driver)
+	if !ok {
+		panic("no driver in the context")
+	}
+	return driver
+}
+
+func AttachContext(ctx context.Context, driver Driver) context.Context {
+	return context.WithValue(ctx, driverContextKey{}, driver)
+}
