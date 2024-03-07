@@ -4,8 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"log"
-	"regexp"
 	"strings"
 
 	"github.com/klippa-app/db-time-machine/internal/config"
@@ -27,25 +25,28 @@ func (p postgres) URI(ctx context.Context) string {
 	return strings.Replace(cfg.Connection.URI, "{}", database, 1)
 }
 
-func (p postgres) Connection(ctx context.Context) *sql.DB {
+func (p postgres) Connection(ctx context.Context) (*sql.DB, error) {
 	if p.connection == nil {
 		db, err := sql.Open("postgres", p.URI(ctx))
 		if err != nil {
-			log.Fatal(err)
+			return nil, err
 		}
 
 		p.connection = db
 	}
 
-	return p.connection
+	return p.connection, nil
 }
 
 func (p postgres) List(ctx context.Context) ([]string, error) {
-	prefix := "test%"
-	// we need to add the % to the prefix ourselves and not in the query, it might be possible to do so there but this is the easiest solution right now.
-	// the connection string we should make ourselves from the config we can get from the context or elsewhere
+	cfg := config.FromContext(ctx)
 
-	rows, err := p.Connection(ctx).Query("SELECT datname FROM pg_database WHERE datname LIKE $1", prefix)
+	conn, err := p.Connection(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := conn.Query("SELECT datname FROM pg_database WHERE datname LIKE $1", cfg.Prefix)
 	if err != nil {
 		return nil, err
 	}
@@ -67,12 +68,17 @@ func (p postgres) List(ctx context.Context) ([]string, error) {
 	return databases, nil
 }
 
-func (p postgres) Clone(ctx context.Context, clonedDBName string, newDBName string) error {
-	_, err := p.Connection(ctx).Exec(
+func (p postgres) Clone(ctx context.Context, source string, target string) error {
+	conn, err := p.Connection(ctx)
+	if err != nil {
+		return err
+	}
+
+	_, err = conn.Exec(
 		fmt.Sprintf(
 			"CREATE DATABASE %s WITH TEMPLATE %s OWNER %s",
-			pq.QuoteIdentifier(newDBName),
-			pq.QuoteIdentifier(clonedDBName),
+			pq.QuoteIdentifier(target),
+			pq.QuoteIdentifier(source),
 			"dochorizon"),
 	)
 	if err != nil {
@@ -82,9 +88,14 @@ func (p postgres) Clone(ctx context.Context, clonedDBName string, newDBName stri
 	return nil
 }
 
-func (p postgres) Remove(ctx context.Context, DBName string) error {
-	_, err := p.Connection(ctx).Exec(
-		fmt.Sprintf("DROP DATABASE %s", DBName),
+func (p postgres) Remove(ctx context.Context, target string) error {
+	conn, err := p.Connection(ctx)
+	if err != nil {
+		return err
+	}
+
+	_, err = conn.Exec(
+		fmt.Sprintf("DROP DATABASE %s", target),
 	)
 	if err != nil {
 		return err
@@ -95,24 +106,6 @@ func (p postgres) Remove(ctx context.Context, DBName string) error {
 
 func (p postgres) Prune(ctx context.Context) error {
 	// instead of regex we might want to do it based off off either last x amount of databases we have or maybe not used within last x days.
-	r, err := regexp.Compile(fmt.Sprintf("^%s", "test"))
-	if err != nil {
-		return err
-	}
-
-	databases, err := p.List(ctx)
-	if err != nil {
-		return err
-	}
-
-	for i := 0; i < len(databases); i++ {
-		if r.Match([]byte(databases[i])) {
-			p.Remove(ctx, databases[i])
-			if err != nil {
-				return err
-			}
-		}
-	}
-
+	// to be implemented.
 	return nil
 }
