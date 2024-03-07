@@ -24,7 +24,7 @@ dbname := "mydb"
 if development {
 
     os.exec("dbtm --username='user' --password='password' ")
-    dbname, err := dbtm.get({
+    dbname, err := dbtm.get(dbtm.Config{
         Username: "user",
         Password: "pass",
     })
@@ -34,6 +34,12 @@ if development {
 db := fmt.Printf("postgresql://user:pass@example.com/%s", dbname)
 
 psql.connect(db)
+
+
+func Get(config dbtm.Config) (string, error) {
+    config := LoadConfig()
+    config.Merge(config)
+}
 ```
 
 

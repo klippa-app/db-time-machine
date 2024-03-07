@@ -1,10 +1,9 @@
 Prefix = "example"
 
 [Connection]
-Username = "root"
-Password = "password"
-Host = "localhost:3306"
-Database = "example"
+URI = "postgres://user:pass@localhost/{}?sslmode=disable"
+Database = "maintainance" 
+
 
 [Migration]
 Directory = "./migrations" 

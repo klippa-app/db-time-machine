@@ -1,12 +1,13 @@
-package utils
+package db
 
 import (
 	"context"
 	"database/sql"
 )
 
-type db interface {
-	getConnection(ctx context.Context) *sql.DB
+type Driver interface {
+	URI(ctx context.Context) string
+	Connection(ctx context.Context) *sql.DB
 	List(ctx context.Context) ([]string, error)
 	Clone(ctx context.Context, clonedDBName string, newDBName string) error
 	Remove(ctx context.Context, DBName string) error

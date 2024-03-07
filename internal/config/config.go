@@ -49,12 +49,8 @@ func MergeFlags(ctx context.Context, flags *pflag.FlagSet) (context.Context, err
 
 	flags.Visit(func(f *pflag.Flag) {
 		switch f.Name {
-		case "username":
-			config.Connection.Username = f.Value.String()
-		case "password":
-			config.Connection.Password = f.Value.String()
-		case "host":
-			config.Connection.Host = f.Value.String()
+		case "uri":
+			config.Connection.URI = f.Value.String()
 		case "database":
 			config.Connection.Database = f.Value.String()
 		case "migration-directory":
@@ -86,9 +82,7 @@ type Config struct {
 	Prefix string
 
 	Connection struct {
-		Username string
-		Password string
-		Host     string
+		URI      string
 		Database string
 	}
 

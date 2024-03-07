@@ -4,8 +4,14 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"context"
+	"fmt"
 	"os"
+	"os/exec"
+	"strings"
 
+	"github.com/klippa-app/db-time-machine/db/dialect"
+	"github.com/klippa-app/db-time-machine/internal"
 	"github.com/klippa-app/db-time-machine/internal/config"
 	"github.com/spf13/cobra"
 )
@@ -40,6 +46,29 @@ ever instantiate a new database for the current migration.`,
 		cmd.SetContext(ctx)
 	},
 	Run: func(cmd *cobra.Command, args []string) {
+		ctx := cmd.Context()
+
+		driver := dialect.Postgres()
+
+		name, err := internal.Get(ctx, driver, func(ctx context.Context, name string) error {
+			cfg := config.FromContext(ctx)
+
+			command := strings.Replace(cfg.Migration.Command, "{}", name, 1)
+
+			cmd := exec.Command(command)
+			cmd.Env = append(cmd.Env, "DBTM_DB_NAME="+name)
+
+			if err := cmd.Run(); err != nil {
+				return err
+			}
+
+			return nil
+		})
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Println(name)
 	},
 }
 
@@ -63,11 +92,7 @@ func init() {
 		StringP("config", "c", "", "config file (default is $PWD/.dbtm.yaml)")
 
 	rootCmd.PersistentFlags().
-		StringP("username", "u", "", "the database user")
-	rootCmd.PersistentFlags().
-		StringP("password", "p", "", "the database password")
-	rootCmd.PersistentFlags().
-		StringP("host", "h", "", "the database host")
+		StringP("uri", "u", "", "the connection uri for the db")
 	rootCmd.PersistentFlags().
 		StringP("database", "d", "", "the database name")
 
