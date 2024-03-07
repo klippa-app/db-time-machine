@@ -50,8 +50,7 @@ ever instantiate a new database for the current migration.`,
 			panic(err)
 		}
 
-		driver := dialect.Postgres()
-		ctx = db.AttachContext(ctx, driver)
+		ctx = db.AttachContext(ctx, dialect.Postgres())
 
 		cmd.SetContext(ctx)
 	},
@@ -63,9 +62,13 @@ ever instantiate a new database for the current migration.`,
 		name, err := internal.Get(ctx, driver, func(ctx context.Context, name string) error {
 			cfg := config.FromContext(ctx)
 
-			command := strings.Replace(cfg.Migration.Command, "{}", name, 1)
+			command := make([]string, len(cfg.Migration.Command))
 
-			cmd := exec.Command(command)
+			for i, part := range cfg.Migration.Command {
+				command[i] = strings.Replace(part, "{}", name, 1)
+			}
+
+			cmd := exec.Command(command[0], command[1:]...)
 			cmd.Env = append(cmd.Env, "DBTM_DB_NAME="+name)
 
 			if err := cmd.Run(); err != nil {
@@ -111,7 +114,7 @@ func init() {
 	rootCmd.PersistentFlags().
 		String("migration-format", "", "a regex for matching migration file names")
 	rootCmd.PersistentFlags().
-		String("migration-command", "", "the command to run to migrate the database")
+		StringArray("migration-command", []string{}, "the command to run to migrate the database")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.

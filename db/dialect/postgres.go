@@ -27,7 +27,6 @@ func (p postgres) URI(ctx context.Context) string {
 
 func (p postgres) Connection(ctx context.Context) (*sql.DB, error) {
 	if p.connection == nil {
-		fmt.Println(p.URI(ctx))
 		db, err := sql.Open("postgres", p.URI(ctx))
 		if err != nil {
 			return nil, err

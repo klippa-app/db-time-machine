@@ -1,11 +1,11 @@
-Prefix = "example"
+Prefix = "dbtm"
 
 [Connection]
-URI = "postgres://user:pass@localhost/{}?sslmode=disable"
-Database = "maintainance" 
+URI = "postgres://postgres@localhost/{}?sslmode=disable"
+Database = "postgres" 
 
 
 [Migration]
 Directory = "./example/migrations" 
 Format = "^[0-9]{4}_"
-Command = "migrate up --database {}"
+Command = [ "./example/migrate", "{}" ]

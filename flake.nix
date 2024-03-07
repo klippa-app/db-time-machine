@@ -13,7 +13,7 @@
       };
       in rec {
         devShells.default = pkgs.mkShell {
-           packages = with pkgs; [ go ];
+           packages = with pkgs; [ go pgcli ];
            shellHook = ''
             export PATH=$PWD/scripts:$PATH
            '';

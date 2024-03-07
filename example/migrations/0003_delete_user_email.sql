@@ -1,1 +1,1 @@
-0003
+ALTER TABLE users DROP COLUMN email;

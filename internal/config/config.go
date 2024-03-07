@@ -58,7 +58,7 @@ func MergeFlags(ctx context.Context, flags *pflag.FlagSet) (context.Context, err
 		case "migration-format":
 			config.Migration.Format = f.Value.String()
 		case "migration-command":
-			config.Migration.Command = f.Value.String()
+			config.Migration.Command = f.Value.(pflag.SliceValue).GetSlice()
 		}
 	})
 
@@ -89,6 +89,6 @@ type Config struct {
 	Migration struct {
 		Directory string
 		Format    string
-		Command   string
+		Command   []string
 	}
 }
