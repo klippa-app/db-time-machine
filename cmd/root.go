@@ -1,30 +1,46 @@
 /*
 Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
 	"os"
 
+	"github.com/klippa-app/db-time-machine/internal/config"
 	"github.com/spf13/cobra"
 )
 
-
-
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "db-time-machine",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Use:   "dbtm",
+	Short: "Calculate the current database name, and instantiate and migrate it if necessary.",
+	Long: `This command will calculate and return the name of the current
+development database an application should connect to.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+If necessary it will also instantiate the database by cloning
+the previous database and applying all missing migrations.
+
+The database names are calculated from the chained hashes of
+each migration file, thus at any time it possible for a
+database for each migration to exist. However dbtm will only
+ever instantiate a new database for the current migration.`,
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		path := cmd.Flags().Lookup("config").Value.String()
+
+		ctx, err := config.Load(cmd.Context(), path)
+		if err != nil {
+			panic(err)
+		}
+
+		ctx, err = config.MergeFlags(ctx, cmd.Flags())
+		if err != nil {
+			panic(err)
+		}
+
+		cmd.SetContext(ctx)
+	},
+	Run: func(cmd *cobra.Command, args []string) {
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -41,11 +57,28 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.db-time-machine.yaml)")
+	rootCmd.PersistentFlags().BoolP("help", "", false, "help for dbtm")
+
+	rootCmd.PersistentFlags().
+		StringP("config", "c", "", "config file (default is $PWD/.dbtm.yaml)")
+
+	rootCmd.PersistentFlags().
+		StringP("username", "u", "", "the database user")
+	rootCmd.PersistentFlags().
+		StringP("password", "p", "", "the database password")
+	rootCmd.PersistentFlags().
+		StringP("host", "h", "", "the database host")
+	rootCmd.PersistentFlags().
+		StringP("database", "d", "", "the database name")
+
+	rootCmd.PersistentFlags().
+		String("migration-directory", "", "the directory containing the migrations")
+	rootCmd.PersistentFlags().
+		String("migration-format", "", "a regex for matching migration file names")
+	rootCmd.PersistentFlags().
+		String("migration-command", "", "the command to run to migrate the database")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
-

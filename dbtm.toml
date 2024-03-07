@@ -1,0 +1,12 @@
+Prefix = "example"
+
+[Connection]
+Username = "root"
+Password = "password"
+Host = "localhost:3306"
+Database = "example"
+
+[Migration]
+Directory = "./migrations" 
+Format = "![0-9]{15}_"
+Command = "migrate up --database {}"
