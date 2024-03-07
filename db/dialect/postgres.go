@@ -27,6 +27,7 @@ func (p postgres) URI(ctx context.Context) string {
 
 func (p postgres) Connection(ctx context.Context) (*sql.DB, error) {
 	if p.connection == nil {
+		fmt.Println(p.URI(ctx))
 		db, err := sql.Open("postgres", p.URI(ctx))
 		if err != nil {
 			return nil, err
@@ -34,7 +35,6 @@ func (p postgres) Connection(ctx context.Context) (*sql.DB, error) {
 
 		p.connection = db
 	}
-
 	return p.connection, nil
 }
 
@@ -47,6 +47,7 @@ func (p postgres) List(ctx context.Context) ([]string, error) {
 	}
 
 	rows, err := conn.Query("SELECT datname FROM pg_database WHERE datname LIKE $1", cfg.Prefix)
+
 	if err != nil {
 		return nil, err
 	}
@@ -107,5 +108,6 @@ func (p postgres) Remove(ctx context.Context, target string) error {
 func (p postgres) Prune(ctx context.Context) error {
 	// instead of regex we might want to do it based off off either last x amount of databases we have or maybe not used within last x days.
 	// to be implemented.
+
 	return nil
 }

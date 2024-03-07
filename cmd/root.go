@@ -13,6 +13,7 @@ import (
 	"github.com/klippa-app/db-time-machine/db/dialect"
 	"github.com/klippa-app/db-time-machine/internal"
 	"github.com/klippa-app/db-time-machine/internal/config"
+	"github.com/klippa-app/db-time-machine/internal/hashes"
 	"github.com/spf13/cobra"
 )
 
@@ -39,6 +40,11 @@ ever instantiate a new database for the current migration.`,
 		}
 
 		ctx, err = config.MergeFlags(ctx, cmd.Flags())
+		if err != nil {
+			panic(err)
+		}
+
+		ctx, err = hashes.Calculate(ctx)
 		if err != nil {
 			panic(err)
 		}

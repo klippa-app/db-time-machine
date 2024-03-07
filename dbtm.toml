@@ -6,6 +6,6 @@ Database = "maintainance"
 
 
 [Migration]
-Directory = "./migrations" 
-Format = "![0-9]{15}_"
+Directory = "./example/migrations" 
+Format = "^[0-9]{4}_"
 Command = "migrate up --database {}"

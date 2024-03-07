@@ -6,6 +6,7 @@ import (
 
 	"github.com/klippa-app/db-time-machine/db"
 	"github.com/klippa-app/db-time-machine/internal/config"
+	"github.com/klippa-app/db-time-machine/internal/hashes"
 )
 
 type MigrateFunc func(ctx context.Context, target string) error
@@ -29,7 +30,7 @@ func NearestParent(ctx context.Context, hashes []string) string {
 }
 
 func Get(ctx context.Context, driver db.Driver, migrate MigrateFunc) (string, error) {
-	hashes := GetHashList(ctx)
+	hashes := hashes.FromContext(ctx)
 	currentName := GenName(ctx, hashes[0])
 	parentName := NearestParent(ctx, hashes)
 
