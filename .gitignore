@@ -24,3 +24,6 @@ go.work
 .local*
 .direnv*
 .envrc*
+
+# build results
+result

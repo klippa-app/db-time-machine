@@ -8,10 +8,15 @@
 
   outputs = { self, flake-utils, nixpkgs }:
     flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = import nixpkgs { inherit system; };
+      let pkgs = import nixpkgs { 
+        inherit system; 
+        overlays = [
+          (final: prev: { buildGoModule = final.buildGo122Module; })
+        ];
+      };
       in rec {
         devShells.default = pkgs.mkShell {
-           packages = with pkgs; [ go_1_22 ];
+           packages = with pkgs; [ go ];
            shellHook = ''
             export PATH=$PWD/scripts:$PATH
            '';
