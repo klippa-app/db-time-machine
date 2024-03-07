@@ -89,6 +89,20 @@ func (p postgres) Clone(ctx context.Context, source string, target string) error
 	return nil
 }
 
+func (p postgres) Create(ctx context.Context, target string) error {
+	conn, err := p.Connection(ctx)
+	if err != nil {
+		return err
+	}
+
+	_, err = conn.Exec(fmt.Sprintf("CREATE DATABASE %s", target))
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (p postgres) Remove(ctx context.Context, target string) error {
 	conn, err := p.Connection(ctx)
 	if err != nil {

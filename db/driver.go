@@ -10,6 +10,7 @@ type Driver interface {
 	Connection(ctx context.Context) (*sql.DB, error)
 	List(ctx context.Context) ([]string, error)
 	Clone(ctx context.Context, source string, target string) error
+	Create(ctx context.Context, target string) error
 	Remove(ctx context.Context, target string) error
 	Prune(ctx context.Context) error
 }
