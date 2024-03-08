@@ -15,6 +15,20 @@ import (
 
 type Hashes []string
 
+/*
+	Calculate determines the hashes migrations and attaches them to the context.
+
+*
+  - Each file name is hashed along with the hash of the previous file name;
+  - This means that if any file is added, removed, or renamed it will break
+  - the hash chain and invalidate any database that was created after.
+  - The file contents is then hashed with the chained file name hash;
+    This means that if the contents of a file changes, it will invalidate
+    the database only for that migration, but not any subsiquent databases.
+
+*
+*
+*/
 func Calculate(ctx context.Context) (context.Context, error) {
 	cfg := config.FromContext(ctx)
 	nameRegex, err := regexp.Compile(cfg.Migration.Format)
@@ -27,7 +41,7 @@ func Calculate(ctx context.Context) (context.Context, error) {
 		return nil, err
 	}
 
-	last := [16]byte{}
+	chainSum := [16]byte{}
 	hashes := []string{}
 
 	filepath.Walk(migrations, func(path string, info fs.FileInfo, err error) error {
@@ -40,11 +54,11 @@ func Calculate(ctx context.Context) (context.Context, error) {
 			return err
 		}
 
-		sum := md5.Sum(append(data, last[:]...))
-		hash := hex.EncodeToString(sum[:])
+		chainSum = md5.Sum(append([]byte(info.Name()), chainSum[:]...))
+		dataSum := md5.Sum(append(data, chainSum[:]...))
+		hash := hex.EncodeToString(dataSum[:])
 
 		hashes = append([]string{hash}, hashes...)
-		last = sum
 
 		return nil
 	})

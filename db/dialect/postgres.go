@@ -76,10 +76,9 @@ func (p postgres) Clone(ctx context.Context, source string, target string) error
 
 	_, err = conn.Exec(
 		fmt.Sprintf(
-			"CREATE DATABASE %s WITH TEMPLATE %s OWNER %s",
+			"CREATE DATABASE %s WITH TEMPLATE %s",
 			pq.QuoteIdentifier(target),
-			pq.QuoteIdentifier(source),
-			"dochorizon"),
+			pq.QuoteIdentifier(source)),
 	)
 	if err != nil {
 		return err
