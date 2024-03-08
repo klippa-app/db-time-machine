@@ -1,3 +1,3 @@
 #!/bin/sh
+go run github.com/rubenv/sql-migrate/sql-migrate $@
 
-echo $1 > migrate.txt

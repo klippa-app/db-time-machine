@@ -1,0 +1,263 @@
+# github.com/BurntSushi/toml v0.3.1
+## explicit
+github.com/BurntSushi/toml
+# github.com/Masterminds/goutils v1.1.1
+## explicit
+github.com/Masterminds/goutils
+# github.com/Masterminds/semver/v3 v3.2.0
+## explicit; go 1.18
+github.com/Masterminds/semver/v3
+# github.com/Masterminds/sprig/v3 v3.2.3
+## explicit; go 1.13
+github.com/Masterminds/sprig/v3
+# github.com/armon/go-radix v1.0.0
+## explicit
+github.com/armon/go-radix
+# github.com/bgentry/speakeasy v0.1.0
+## explicit
+github.com/bgentry/speakeasy
+# github.com/denisenkom/go-mssqldb v0.9.0
+## explicit; go 1.11
+github.com/denisenkom/go-mssqldb
+github.com/denisenkom/go-mssqldb/internal/cp
+github.com/denisenkom/go-mssqldb/internal/decimal
+github.com/denisenkom/go-mssqldb/internal/querytext
+# github.com/fatih/color v1.13.0
+## explicit; go 1.13
+github.com/fatih/color
+# github.com/fsnotify/fsnotify v1.5.1
+## explicit; go 1.13
+github.com/fsnotify/fsnotify
+# github.com/go-gorp/gorp/v3 v3.1.0
+## explicit; go 1.18
+github.com/go-gorp/gorp/v3
+# github.com/go-logfmt/logfmt v0.6.0
+## explicit; go 1.17
+github.com/go-logfmt/logfmt
+# github.com/go-sql-driver/mysql v1.6.0
+## explicit; go 1.10
+github.com/go-sql-driver/mysql
+# github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572
+## explicit; go 1.13
+github.com/go-task/slim-sprig
+# github.com/godror/godror v0.40.4
+## explicit; go 1.21
+github.com/godror/godror
+github.com/godror/godror/dsn
+github.com/godror/godror/odpi/embed
+github.com/godror/godror/odpi/include
+github.com/godror/godror/odpi/src
+github.com/godror/godror/slog
+# github.com/godror/knownpb v0.1.1
+## explicit; go 1.17
+github.com/godror/knownpb/internal
+github.com/godror/knownpb/timestamppb
+# github.com/golang-sql/civil v0.0.0-20190719163853-cb61b32ac6fe
+## explicit
+github.com/golang-sql/civil
+# github.com/google/pprof v0.0.0-20210720184732-4bb14d4b1be1
+## explicit; go 1.14
+github.com/google/pprof/profile
+# github.com/google/uuid v1.3.0
+## explicit
+github.com/google/uuid
+# github.com/hashicorp/errwrap v1.1.0
+## explicit
+github.com/hashicorp/errwrap
+# github.com/hashicorp/go-multierror v1.1.1
+## explicit; go 1.13
+github.com/hashicorp/go-multierror
+# github.com/hashicorp/hcl v1.0.0
+## explicit
+github.com/hashicorp/hcl
+github.com/hashicorp/hcl/hcl/ast
+github.com/hashicorp/hcl/hcl/parser
+github.com/hashicorp/hcl/hcl/printer
+github.com/hashicorp/hcl/hcl/scanner
+github.com/hashicorp/hcl/hcl/strconv
+github.com/hashicorp/hcl/hcl/token
+github.com/hashicorp/hcl/json/parser
+github.com/hashicorp/hcl/json/scanner
+github.com/hashicorp/hcl/json/token
+# github.com/huandu/xstrings v1.4.0
+## explicit; go 1.12
+github.com/huandu/xstrings
+# github.com/imdario/mergo v0.3.13
+## explicit; go 1.13
+github.com/imdario/mergo
+# github.com/inconshreveable/mousetrap v1.1.0
+## explicit; go 1.18
+github.com/inconshreveable/mousetrap
+# github.com/klippa-app/db-time-machine v0.0.0 => ../
+## explicit; go 1.22.1
+github.com/klippa-app/db-time-machine
+github.com/klippa-app/db-time-machine/cmd
+github.com/klippa-app/db-time-machine/db
+github.com/klippa-app/db-time-machine/db/dialect
+github.com/klippa-app/db-time-machine/internal
+github.com/klippa-app/db-time-machine/internal/config
+github.com/klippa-app/db-time-machine/internal/hashes
+# github.com/lib/pq v1.10.9
+## explicit; go 1.13
+github.com/lib/pq
+github.com/lib/pq/oid
+github.com/lib/pq/scram
+# github.com/magiconair/properties v1.8.5
+## explicit; go 1.13
+github.com/magiconair/properties
+# github.com/mattn/go-colorable v0.1.13
+## explicit; go 1.15
+github.com/mattn/go-colorable
+# github.com/mattn/go-isatty v0.0.17
+## explicit; go 1.15
+github.com/mattn/go-isatty
+# github.com/mattn/go-oci8 v0.1.1
+## explicit; go 1.13
+github.com/mattn/go-oci8
+# github.com/mattn/go-runewidth v0.0.9
+## explicit; go 1.9
+github.com/mattn/go-runewidth
+# github.com/mattn/go-sqlite3 v1.14.19
+## explicit; go 1.16
+github.com/mattn/go-sqlite3
+# github.com/mitchellh/cli v1.1.5
+## explicit; go 1.11
+github.com/mitchellh/cli
+# github.com/mitchellh/copystructure v1.2.0
+## explicit; go 1.15
+github.com/mitchellh/copystructure
+# github.com/mitchellh/mapstructure v1.4.3
+## explicit; go 1.14
+github.com/mitchellh/mapstructure
+# github.com/mitchellh/reflectwalk v1.0.2
+## explicit
+github.com/mitchellh/reflectwalk
+# github.com/olekukonko/tablewriter v0.0.5
+## explicit; go 1.12
+github.com/olekukonko/tablewriter
+# github.com/onsi/ginkgo/v2 v2.16.0
+## explicit; go 1.20
+github.com/onsi/ginkgo/v2/config
+github.com/onsi/ginkgo/v2/formatter
+github.com/onsi/ginkgo/v2/ginkgo
+github.com/onsi/ginkgo/v2/ginkgo/build
+github.com/onsi/ginkgo/v2/ginkgo/command
+github.com/onsi/ginkgo/v2/ginkgo/generators
+github.com/onsi/ginkgo/v2/ginkgo/internal
+github.com/onsi/ginkgo/v2/ginkgo/labels
+github.com/onsi/ginkgo/v2/ginkgo/outline
+github.com/onsi/ginkgo/v2/ginkgo/run
+github.com/onsi/ginkgo/v2/ginkgo/unfocus
+github.com/onsi/ginkgo/v2/ginkgo/watch
+github.com/onsi/ginkgo/v2/internal/interrupt_handler
+github.com/onsi/ginkgo/v2/internal/parallel_support
+github.com/onsi/ginkgo/v2/reporters
+github.com/onsi/ginkgo/v2/types
+# github.com/pelletier/go-toml v1.9.4
+## explicit; go 1.12
+github.com/pelletier/go-toml
+# github.com/posener/complete v1.2.3
+## explicit; go 1.13
+github.com/posener/complete
+github.com/posener/complete/cmd
+github.com/posener/complete/cmd/install
+# github.com/rubenv/sql-migrate v1.6.1
+## explicit; go 1.21
+github.com/rubenv/sql-migrate
+github.com/rubenv/sql-migrate/sql-migrate
+github.com/rubenv/sql-migrate/sqlparse
+# github.com/shopspring/decimal v1.3.1
+## explicit; go 1.13
+github.com/shopspring/decimal
+# github.com/spf13/afero v1.6.0
+## explicit; go 1.13
+github.com/spf13/afero
+github.com/spf13/afero/mem
+# github.com/spf13/cast v1.5.0
+## explicit; go 1.18
+github.com/spf13/cast
+# github.com/spf13/cobra v1.8.0
+## explicit; go 1.15
+github.com/spf13/cobra
+# github.com/spf13/cobra-cli v1.3.0
+## explicit; go 1.15
+github.com/spf13/cobra-cli
+github.com/spf13/cobra-cli/cmd
+github.com/spf13/cobra-cli/tpl
+# github.com/spf13/jwalterweatherman v1.1.0
+## explicit
+github.com/spf13/jwalterweatherman
+# github.com/spf13/pflag v1.0.5
+## explicit; go 1.12
+github.com/spf13/pflag
+# github.com/spf13/viper v1.10.1
+## explicit; go 1.17
+github.com/spf13/viper
+github.com/spf13/viper/internal/encoding
+github.com/spf13/viper/internal/encoding/hcl
+github.com/spf13/viper/internal/encoding/json
+github.com/spf13/viper/internal/encoding/toml
+github.com/spf13/viper/internal/encoding/yaml
+# github.com/subosito/gotenv v1.2.0
+## explicit
+github.com/subosito/gotenv
+# golang.org/x/crypto v0.17.0
+## explicit; go 1.18
+golang.org/x/crypto/bcrypt
+golang.org/x/crypto/blowfish
+golang.org/x/crypto/md4
+golang.org/x/crypto/pbkdf2
+golang.org/x/crypto/scrypt
+# golang.org/x/exp v0.0.0-20230905200255-921286631fa9
+## explicit; go 1.20
+golang.org/x/exp/constraints
+golang.org/x/exp/slices
+golang.org/x/exp/slog
+golang.org/x/exp/slog/internal
+golang.org/x/exp/slog/internal/buffer
+# golang.org/x/sys v0.16.0
+## explicit; go 1.18
+golang.org/x/sys/unix
+# golang.org/x/text v0.14.0
+## explicit; go 1.18
+golang.org/x/text/transform
+golang.org/x/text/unicode/norm
+# golang.org/x/tools v0.17.0
+## explicit; go 1.18
+golang.org/x/tools/cover
+golang.org/x/tools/go/ast/inspector
+# google.golang.org/protobuf v1.30.0
+## explicit; go 1.11
+google.golang.org/protobuf/encoding/prototext
+google.golang.org/protobuf/encoding/protowire
+google.golang.org/protobuf/internal/descfmt
+google.golang.org/protobuf/internal/descopts
+google.golang.org/protobuf/internal/detrand
+google.golang.org/protobuf/internal/encoding/defval
+google.golang.org/protobuf/internal/encoding/messageset
+google.golang.org/protobuf/internal/encoding/tag
+google.golang.org/protobuf/internal/encoding/text
+google.golang.org/protobuf/internal/errors
+google.golang.org/protobuf/internal/filedesc
+google.golang.org/protobuf/internal/filetype
+google.golang.org/protobuf/internal/flags
+google.golang.org/protobuf/internal/genid
+google.golang.org/protobuf/internal/impl
+google.golang.org/protobuf/internal/order
+google.golang.org/protobuf/internal/pragma
+google.golang.org/protobuf/internal/set
+google.golang.org/protobuf/internal/strs
+google.golang.org/protobuf/internal/version
+google.golang.org/protobuf/proto
+google.golang.org/protobuf/reflect/protoreflect
+google.golang.org/protobuf/reflect/protoregistry
+google.golang.org/protobuf/runtime/protoiface
+google.golang.org/protobuf/runtime/protoimpl
+google.golang.org/protobuf/types/known/timestamppb
+# gopkg.in/ini.v1 v1.66.2
+## explicit
+gopkg.in/ini.v1
+# gopkg.in/yaml.v2 v2.4.0
+## explicit; go 1.15
+gopkg.in/yaml.v2
+# github.com/klippa-app/db-time-machine => ../

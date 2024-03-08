@@ -1,0 +1,11 @@
+Prefix = "dbtm"
+
+[Connection]
+URI = "postgres://postgres@localhost/{}?sslmode=disable"
+Database = "postgres" 
+
+
+[Migration]
+Directory = "./migrations" 
+Format = "^[0-9]{4}_"
+Command = "./migrate-up"

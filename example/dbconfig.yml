@@ -1,0 +1,5 @@
+development:
+  dialect: postgres
+  dir: migrations
+  table: migrations
+  datasource: postgres://postgres@localhost/${DB_NAME}?sslmode=disable
