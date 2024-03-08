@@ -4,9 +4,12 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"slices"
 	"strings"
 
+	"github.com/klippa-app/db-time-machine/internal"
 	"github.com/klippa-app/db-time-machine/internal/config"
+	"github.com/klippa-app/db-time-machine/internal/hashes"
 	"github.com/lib/pq"
 	_ "github.com/lib/pq"
 )
@@ -117,9 +120,41 @@ func (p postgres) Remove(ctx context.Context, target string) error {
 	return nil
 }
 
+func (p postgres) PruneList(ctx context.Context) ([]string, error) {
+	hashList := hashes.FromContext(ctx)
+
+	dbList, err := p.List(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var hashNames []string
+	for _, hash := range hashList {
+		hashNames = append(hashNames, internal.GenName(ctx, hash))
+	}
+
+	var dbToPrune []string
+	for _, db := range dbList {
+		if !slices.Contains(hashNames, db) {
+			dbToPrune = append(dbToPrune, db)
+		}
+	}
+
+	return dbToPrune, nil
+}
+
 func (p postgres) Prune(ctx context.Context) error {
-	// instead of regex we might want to do it based off off either last x amount of databases we have or maybe not used within last x days.
-	// to be implemented.
+	toPrune, err := p.PruneList(ctx)
+	if err != nil {
+		return err
+	}
+
+	for _, db := range toPrune {
+		err = p.Remove(ctx, db)
+		if err != nil {
+			return err
+		}
+	}
 
 	return nil
 }

@@ -12,6 +12,7 @@ type Driver interface {
 	Clone(ctx context.Context, source string, target string) error
 	Create(ctx context.Context, target string) error
 	Remove(ctx context.Context, target string) error
+	PruneList(ctx context.Context) ([]string, error)
 	Prune(ctx context.Context) error
 }
 
