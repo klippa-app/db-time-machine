@@ -1,1 +1,1 @@
-0001
+CREATE TABLE users;
