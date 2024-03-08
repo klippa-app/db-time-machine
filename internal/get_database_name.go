@@ -17,8 +17,9 @@ func GenName(ctx context.Context, hash string) string {
 	return fmt.Sprintf("%s_%s", config.Prefix, hash[:8])
 }
 
-func GetDatabaseName(ctx context.Context, driver db.Driver, migrate MigrateFunc) (string, error) {
+func TimeTravel(ctx context.Context, migrate MigrateFunc) (string, error) {
 	hashes := hashes.FromContext(ctx)
+	driver := db.FromContext(ctx)
 
 	names := make([]string, len(hashes))
 	for i := range hashes {

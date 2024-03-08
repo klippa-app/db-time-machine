@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"github.com/BurntSushi/toml"
-	"github.com/spf13/pflag"
 )
 
 func FromContext(ctx context.Context) Config {
@@ -16,6 +15,10 @@ func FromContext(ctx context.Context) Config {
 		panic("no config in the context")
 	}
 	return cfg
+}
+
+func Attach(ctx context.Context, cfg Config) context.Context {
+	return context.WithValue(ctx, configContextKey{}, cfg)
 }
 
 func Load(ctx context.Context, path string) (context.Context, error) {
@@ -41,28 +44,7 @@ func Load(ctx context.Context, path string) (context.Context, error) {
 		return nil, errors.New("could not find a config file")
 	}
 
-	return context.WithValue(ctx, configContextKey{}, *config), nil
-}
-
-func MergeFlags(ctx context.Context, flags *pflag.FlagSet) (context.Context, error) {
-	config := FromContext(ctx)
-
-	flags.Visit(func(f *pflag.Flag) {
-		switch f.Name {
-		case "uri":
-			config.Connection.URI = f.Value.String()
-		case "database":
-			config.Connection.Database = f.Value.String()
-		case "migration-directory":
-			config.Migration.Directory = f.Value.String()
-		case "migration-format":
-			config.Migration.Format = f.Value.String()
-		case "migration-command":
-			config.Migration.Command = f.Value.String()
-		}
-	})
-
-	return context.WithValue(ctx, configContextKey{}, config), nil
+	return Attach(ctx, *config), nil
 }
 
 func readConfig(path string) (*Config, error) {
@@ -79,16 +61,19 @@ func readConfig(path string) (*Config, error) {
 type configContextKey struct{}
 
 type Config struct {
-	Prefix string
+	Prefix string `json:",omitempty"`
 
-	Connection struct {
-		URI      string
-		Database string
-	}
+	Connection ConnectionConfig
+	Migration  MigrationConfig
+}
 
-	Migration struct {
-		Directory string
-		Format    string
-		Command   string
-	}
+type ConnectionConfig struct {
+	URI      string `json:",omitempty"`
+	Database string `json:",omitempty"`
+}
+
+type MigrationConfig struct {
+	Directory string `json:",omitempty"`
+	Format    string `json:",omitempty"`
+	Command   string `json:",omitempty"`
 }

@@ -57,9 +57,7 @@ ever instantiate a new database for the current migration.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx := cmd.Context()
 
-		driver := db.FromContext(ctx)
-
-		name, err := internal.GetDatabaseName(ctx, driver, func(ctx context.Context, name string) error {
+		name, err := internal.TimeTravel(ctx, func(ctx context.Context, name string) error {
 			cfg := config.FromContext(ctx)
 
 			if cfg.Migration.Command == "" {
