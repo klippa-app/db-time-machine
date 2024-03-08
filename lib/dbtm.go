@@ -9,7 +9,7 @@ import (
 	"github.com/klippa-app/db-time-machine/internal/hashes"
 )
 
-func TimeTravel(driver db.Driver, migrateFn MigrateFunc, cfg Config) (string, error) {
+func TimeTravel(driver db.Driver, cfg Config) (string, error) {
 	ctx := context.Background()
 	ctx, err := config.Load(ctx, cfg.ConfigFile)
 	if err != nil {
@@ -28,12 +28,13 @@ func TimeTravel(driver db.Driver, migrateFn MigrateFunc, cfg Config) (string, er
 
 	ctx = db.AttachContext(ctx, driver)
 
-	return internal.TimeTravel(ctx, internal.MigrateFunc(migrateFn))
+	return internal.TimeTravel(ctx, internal.MigrateFunc(cfg.MigrationFn))
 }
 
 type Config struct {
 	config.Config
-	ConfigFile string
+	ConfigFile  string
+	MigrationFn MigrateFunc
 }
 
 type MigrateFunc internal.MigrateFunc

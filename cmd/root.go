@@ -57,23 +57,7 @@ ever instantiate a new database for the current migration.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx := cmd.Context()
 
-		name, err := internal.TimeTravel(ctx, func(ctx context.Context, name string) error {
-			cfg := config.FromContext(ctx)
-
-			if cfg.Migration.Command == "" {
-				panic(errors.New("migration command cannot be empty"))
-			}
-
-			pwd, _ := os.Getwd()
-			fmt.Println(pwd)
-
-			cmd := exec.Command(cfg.Migration.Command, name)
-			if err := cmd.Run(); err != nil {
-				return err
-			}
-
-			return nil
-		})
+		name, err := internal.TimeTravel(ctx, nil)
 		if err != nil {
 			panic(err)
 		}

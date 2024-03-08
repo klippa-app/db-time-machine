@@ -2,7 +2,10 @@ package internal
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"os"
+	"os/exec"
 	"slices"
 
 	"github.com/klippa-app/db-time-machine/db"
@@ -17,9 +20,31 @@ func GenName(ctx context.Context, hash string) string {
 	return fmt.Sprintf("%s_%s", config.Prefix, hash[:8])
 }
 
-func TimeTravel(ctx context.Context, migrate MigrateFunc) (string, error) {
+func migrate(ctx context.Context, name string) error {
+	cfg := config.FromContext(ctx)
+
+	if cfg.Migration.Command == "" {
+		panic(errors.New("migration command cannot be empty"))
+	}
+
+	pwd, _ := os.Getwd()
+	fmt.Println(pwd)
+
+	cmd := exec.Command(cfg.Migration.Command, name)
+	if err := cmd.Run(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func TimeTravel(ctx context.Context, migrateFn MigrateFunc) (string, error) {
 	hashes := hashes.FromContext(ctx)
 	driver := db.FromContext(ctx)
+
+	if migrateFn == nil {
+		migrateFn = migrate
+	}
 
 	names := make([]string, len(hashes))
 	for i := range hashes {
