@@ -46,7 +46,7 @@ var pruneCmd = &cobra.Command{
 
 		fmt.Println("The following databases will be deleted if you continue: ")
 		for _, db := range dbList {
-			fmt.Println("- %s", db)
+			fmt.Printf("- %s\n", db)
 		}
 
 		askBool = ask()

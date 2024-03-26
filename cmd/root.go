@@ -4,11 +4,8 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"context"
-	"errors"
 	"fmt"
 	"os"
-	"os/exec"
 
 	"github.com/klippa-app/db-time-machine/db"
 	"github.com/klippa-app/db-time-machine/db/dialect"
