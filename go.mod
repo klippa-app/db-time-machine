@@ -1,6 +1,6 @@
 module github.com/klippa-app/db-time-machine
 
-go 1.22.1
+go 1.22
 
 require (
 	github.com/BurntSushi/toml v0.3.1
